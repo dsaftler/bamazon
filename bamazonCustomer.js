@@ -41,8 +41,6 @@ function displayProducts() {
     var thisQty=parseInt(data.qty);
     var query1 = "SELECT stock_quantity,price FROM products WHERE ?"
 
-    // try {
-      // connection = config.dbConnect();
     connection.query(query1, { item_id: thisItem }, function(err,result,fields){
      // console.log(result);
     var curOnHand = result[0].stock_quantity;
@@ -53,7 +51,6 @@ function displayProducts() {
       var newQty = curOnHand - thisQty
       // console.log(newQty);
       var qry = "UPDATE products SET ? WHERE ?";
-      // try {
         // connection = config.dbConnect();
         // qry = "UPDATE products SET `stock_quantity` = 484 WHERE `item_id` = '3'";
         // connection.query(qry, function (err, res) {
@@ -61,26 +58,16 @@ function displayProducts() {
           }], function (err, res) {
           // "UPDATE products SET `stock_quantity` = 484 WHERE `item_id` = '3'"
       if (err) throw err;
-          
-        // console.log("Updated Inventory: " + res.affectedRows);
       ui.log.write("\u001b[1;32m"+"Bamazon says: " + res.message);
       extPrice = parseFloat((itemPrice * data.qty).toFixed(2))
-         // console.log(cart);
       cart = parseFloat(cart.toFixed(2))
       cart += extPrice;
       ui.log.write("\u001b[1;32m"+"Extended Price: $ " + extPrice.toFixed(2) + "      In your Cart:   $ " + cart.toFixed(2));
       showProductsTable();
-
-      // process.stdin.on('data', ));
-      // console.log(res.affectedRows + " products updated!\n");
     });
-        // connection.end();
-      // } catch (err) {
-      //     console.log(err);
-      // }
   } else {
       ui.log.write("\u001b[1;31m"+"There aren't enough in stock right now. Try again tomorrow.");
-      ui.log.write("\u001b[1;32m" + "Extended Price: $ " + extPrice.toFixed(2) + "      In your Cart:   $ " + cart.toFixed(2));
+      ui.log.write("\u001b[1;32m"+"Extended Price: $ " + extPrice.toFixed(2) + "      In your Cart:   $ " + cart.toFixed(2));
       //  process.stdin.setRawMode(true);
       // process.stdin.resume();
       // process.stdin.on('readable', function () {
@@ -90,16 +77,10 @@ function displayProducts() {
   };
  
 });
-// }catch (err) {
-  //   console.log(err);
-  // };
-});
-// connection.end();
-}
+
 
 function showProductsTable() {
   // try {
-
    connection = config.dbConnect();
   //TODO  select * from products order by department_name where stock_quantity > 0
   connection.query("SELECT item_id,product_name, department_name,price,stock_quantity FROM products WHERE stock_quantity>0  ORDER BY department_name, product_name", function (err, res, fields ) {
