@@ -12,7 +12,7 @@ module.exports = {
   });
   connection.connect(function (err) {
   if (err) throw err;
-    console.log("connected as id:" + connection.threadId);
+    console.log("\u001B[0m" +"Connection status: " + connection.state);
   });
 
 return connection;
