@@ -40,9 +40,9 @@ function displayProducts() {
     var thisItem = parseInt(data.item_id);
     var thisQty=parseInt(data.qty);
     var query1 = "SELECT stock_quantity,price FROM products WHERE ?"
-
+    
+    // console.log(result);
     connection.query(query1, { item_id: thisItem }, function(err,result,fields){
-     // console.log(result);
     var curOnHand = result[0].stock_quantity;
     var itemPrice = result[0].price;
       // console.log(curOnHand);
@@ -64,19 +64,15 @@ function displayProducts() {
       cart += extPrice;
       ui.log.write("\u001b[1;32m"+"Extended Price: $ " + extPrice.toFixed(2) + "      In your Cart:   $ " + cart.toFixed(2));
       showProductsTable();
-    });
-  } else {
-      ui.log.write("\u001b[1;31m"+"There aren't enough in stock right now. Try again tomorrow.");
-      ui.log.write("\u001b[1;32m"+"Extended Price: $ " + extPrice.toFixed(2) + "      In your Cart:   $ " + cart.toFixed(2));
-      //  process.stdin.setRawMode(true);
-      // process.stdin.resume();
-      // process.stdin.on('readable', function () {
-          // var key = string(process.stdin.read());
-      // })
-      showProductsTable()
-  };
- 
+      });
+    } else {
+        ui.log.write("\u001b[1;31m"+"There aren't enough in stock right now. Try again tomorrow.");
+        ui.log.write("\u001b[1;32m"+"Extended Price: $ " + extPrice.toFixed(2) + "      In your Cart:   $ " + cart.toFixed(2));
+        showProductsTable()
+    };
+  });
 });
+};
 
 
 function showProductsTable() {
