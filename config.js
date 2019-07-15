@@ -18,8 +18,3 @@ module.exports = {
 return connection;
   }
 };
-// return {host: "localhost",
-// PORT: 3306,
-// user: "root",
-// password: "testPassword",
-// database: "bamazon"}
